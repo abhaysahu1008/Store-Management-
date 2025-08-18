@@ -116,39 +116,49 @@ export async function updateUserRole(_: any, args: {
 
 
 export async function updateUserProfile(_: any, args: {
+  userId: string,
   name: string,
   username: string,
   email: string,
   avatar: string,
-  userId: string,
-
+  bio: string,
+  phoneNumber: string
 }) {
-
   try {
-    const dataToSave = {
-      name: args.name,
-      email: args.email,
-      avatar: args.avatar,
-      username: args.username
-    }
-
     const user = await getUserFromCookies();
     if (user?.role !== "admin" && user?.id !== args.userId) return false;
-    // if (user?.role !== "admin" && user?id !== args.userId) return false;
+
+    const profileExists = await prisma.profile.findUnique({
+      where: { userId: args.userId }
+    });
+
+    if (!profileExists) {
+      return false;
+    }
 
     await prisma.user.update({
-      where: {
-        id: args.userId
-      },
-      data: dataToSave
-    })
+      where: { id: args.userId },
+      data: {
+        name: args.name,
+        username: args.username,
+        email: args.email,
+        avatar: args.avatar,
+        Profile: {
+          update: {
+            bio: args.bio,
+            phoneNumber: args.phoneNumber
+          }
+        }
+      }
+    });
+
     return true;
-  }
-  catch (error) {
+  } catch (error) {
+    console.log(error);
     return false;
   }
-
 }
+
 
 export async function getAllUsers(_: any, args: {
   role: "staff" | "manager"
@@ -167,28 +177,3 @@ export async function getAllUsers(_: any, args: {
     return null;
   }
 }
-
-// export async function createProfile(_: any, args: {
-//   bio: string,
-//   phoneNumber: string
-// }) {
-
-//   const profile = await prisma.profile.create({
-//     data: {
-//       bio: args.bio,
-//       phoneNumber: args.phoneNumber
-//     },
-//     include: {
-//       user: {
-
-//       }
-//     }
-//   })
-
-
-
-// }
-
-export async function getMyProfile(_: any, args: {
-
-})

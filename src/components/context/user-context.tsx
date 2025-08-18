@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, ReactNode } from "react";
-import { RoleType } from "../../generated/prisma";
+import { Profile, RoleType } from "../../generated/prisma";
 
 type UserWithoutPassword = {
   id: string,
@@ -9,7 +9,8 @@ type UserWithoutPassword = {
   email: string,
   username: string,
   avatar: string | null,
-  role: RoleType
+  role: RoleType,
+  profile: Profile
 }
 
 export const UserContext = createContext<{

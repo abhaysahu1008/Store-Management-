@@ -5,9 +5,12 @@ import Link from 'next/link'
 
 const Cards = ({ user }) => {
 
+  console.log(user);
+
+
   return (
     <div>
-      <Link href={"/profile"}>
+      <Link href={"/profile/" + user.id}>
         <Box maxWidth="240px">
           <Card>
             <Flex gap="3" align="center">

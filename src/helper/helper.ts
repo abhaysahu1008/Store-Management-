@@ -14,9 +14,14 @@ export async function getUserFromCookies() {
 
     if (!data?.id) return null;
 
+
+
     const user = await prisma.user.findUnique({
       where: {
         id: data?.id
+      },
+      include: {
+        Profile: true
       },
       omit: {
         password: true

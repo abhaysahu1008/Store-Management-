@@ -47,3 +47,9 @@ query Query($productId: ID!) {
   }
 }
 `;
+
+export const UPDATE_USER_PROFILE = gql`
+mutation Mutation($userId: String, $name: String, $email: String, $username: String, $avatar: String, $bio: String, $phoneNumber: String) {
+  updateUserProfile(userId: $userId, name: $name, email: $email, username: $username, avatar: $avatar, bio: $bio, phoneNumber: $phoneNumber)
+}
+`

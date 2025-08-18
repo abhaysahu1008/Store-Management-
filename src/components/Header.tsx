@@ -14,9 +14,6 @@ const Header = () => {
 
       <img src="https://th.bing.com/th/id/OIP.NT3pICd1d6YlO9iSHoQflgHaHa?w=168&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" className='h-[50px] w-[50px]' alt="" />
 
-      {/* ▼ Dropdown  */}
-      <AddProfileBtn />
-
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <Box maxWidth="240px" className="cursor-pointer">
@@ -44,7 +41,7 @@ const Header = () => {
 
         <DropdownMenu.Content className="bg-gray-800 shadow rounded-md p-2 text-gray-100">
           <DropdownMenu.Item className="px-3 py-1 cursor-pointer hover:bg-gray-700 rounded">
-            <Link href={"/profile"}>Profile</Link>
+            <Link href={"/profile/" + user?.id}>Profile</Link>
           </DropdownMenu.Item>
           <DropdownMenu.Item className="px-3 py-1 cursor-pointer hover:bg-gray-700 rounded">
             <Link href={"/signup"}>Logout</Link>

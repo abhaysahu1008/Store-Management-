@@ -7,7 +7,7 @@ import { getUserFromCookies } from "../../../helper/helper";
 import { signToken } from "../../../services/jwt";
 import { prisma } from "../../../services/prisma";
 import { addProduct, createSale, getAllProducts, getAllSales, productPage } from "./resolvers/products";
-import { createProfile, createUser, getAllUsers, getMyProfile, updateUserProfile, updateUserRole } from "./resolvers/user";
+import { createUser, getAllUsers, updateUserProfile, updateUserRole } from "./resolvers/user";
 
 const typeDefs = gql`
   type Query {
@@ -17,16 +17,16 @@ const typeDefs = gql`
     getAllProducts: [Product]
     productPage(id: String): Product
     getAllSales(productId: ID!): [Sale!]!
-    getMyProfile(id: String!): Profile
+
   }
 
   type Mutation {
     createSale(id: String, quantity: Int): Boolean
     createUser(name: String!, email: String!, username: String!, password: String!, role: String!): User
     updateUserRole(userId: String!, role: String!): Boolean
-    updateUserProfile(userId: String, name: String, email: String, username: String, avatar: String): Boolean
+    updateUserProfile(userId: String, name: String, email: String, username: String, avatar: String, bio: String, phoneNumber: String): Boolean
     addProduct(title: String!, description: String!, category: String!, price: Float!): Product
-
+    # createProfile(bio: String, phoneNumber: String): Profile
   }
 
   type Product {
@@ -100,8 +100,7 @@ const resolvers = {
     getAllUsers,
     getAllProducts,
     productPage,
-    getAllSales,
-    getMyProfile
+    getAllSales
   },
   Mutation: {
     createUser,
@@ -109,8 +108,7 @@ const resolvers = {
     updateUserProfile,
     addProduct,
     createSale,
-
-
+    // createProfile
   }
 };
 
