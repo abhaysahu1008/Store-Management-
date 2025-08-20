@@ -22,10 +22,15 @@ const typeDefs = gql`
 
   type Mutation {
     createSale(id: String, quantity: Int): Boolean
-    createUser(name: String!, email: String!, username: String!, password: String!, role: String!): User
+
+    createUser(name: String!, email: String!, username: String!, password: String!, role: String!, avatar: String): User
+
     updateUserRole(userId: String!, role: String!): Boolean
+
     updateUserProfile(userId: String, name: String, email: String, username: String, avatar: String, bio: String, phoneNumber: String): Boolean
+
     addProduct(title: String!, description: String!, category: String!, price: Float!): Product
+
     # createProfile(bio: String, phoneNumber: String): Profile
   }
 

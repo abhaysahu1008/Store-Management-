@@ -16,13 +16,24 @@ export default function Signup() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    const data = await gqlClient.request(CREATE_USER, {
-      name,
-      username,
-      email,
-      avatar,
-      role
-    })
+    try {
+      const data = await gqlClient.request(CREATE_USER, {
+        name,
+        username,
+        email,
+        password,
+        role
+      })
+
+      if (data?.createUser) {
+        alert("Signed up successfully");
+      }
+      else {
+        alert("Sign up failed");
+      }
+    } catch (error) {
+      alert("Something went wrong!")
+    }
   }
 
   return (
@@ -55,13 +66,13 @@ export default function Signup() {
         onChange={e => setPassword(e.target.value)}
         className="px-3 py-2 rounded-md bg-gray-800 text-white placeholder-gray-400"
       />
-      <input
+      {/* <input
         type="url"
         placeholder="Avatar URL"
         value={avatar}
         onChange={e => setAvatar(e.target.value)}
         className="px-3 py-2 rounded-md bg-gray-800 text-white placeholder-gray-400"
-      />
+      /> */}
 
       <div className="flex flex-col gap-2">
         <Text size="2" weight="semibold" className="text-white">Select a role</Text>

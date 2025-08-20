@@ -1,23 +1,23 @@
-'use client'
-import { useContext } from "react";
+import { redirect } from "next/navigation";
+import { getUserFromCookies } from "../../../helper/helper";
 import AdminDashboard from "../../../components/AdminDashboard";
-import { UserContext } from "../../../components/context/user-context";
-import AddUserButton from "../../../components/buttons/add-user-btn";
 import StaffManagerDashBoard from "../../../components/Staff-Manager-Dashboard";
 
-export default function Home() {
 
-  const { user } = useContext(UserContext);
-  console.log(user);
+export default async function DashboardPage() {
+  const user = await getUserFromCookies();
 
-  return (
-    <div>
-      <main >
+  if (!user) {
+    redirect("/");
+  }
 
-        {user?.role.toLowerCase() == "admin" && <AdminDashboard />}
-        {(user?.role.toLowerCase() == "manager" || user?.role.toLowerCase() == "staff") && <StaffManagerDashBoard />}
+  if (user.role?.toLowerCase() === "admin") {
+    return <AdminDashboard />;
+  }
 
-      </main>
-    </div>
-  );
+  if (["manager", "staff"].includes(user.role?.toLowerCase())) {
+    return <StaffManagerDashBoard />;
+  }
+
+  redirect("/");
 }

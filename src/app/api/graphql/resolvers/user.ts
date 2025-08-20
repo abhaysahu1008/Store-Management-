@@ -42,31 +42,40 @@ export async function loginUser(_: any, args: {
   }
 }
 
-
-export async function createUser(_: any, args: {
-  name: string,
-  email: string,
-  username: string,
-  password: string,
-  role: RoleType
-}) {
-
+export async function createUser(
+  _: any,
+  args: {
+    name: string;
+    email: string;
+    username: string;
+    password: string;
+    role: RoleType;
+    avatar?: string;
+  }
+) {
   try {
     const user = await getUserFromCookies();
     if (!user) return null;
-
-    if (user.role != "admin") return null;
+    if (user.role !== "admin") return null;
 
     const newUser = await prisma.user.create({
-      data: args
-    })
-    return newUser;
+      data: {
+        name: args.name,
+        email: args.email,
+        username: args.username,
+        password: args.password,
+        role: args.role,
+        avatar: args.avatar ?? null,
+      },
+    });
 
+    return newUser;
   } catch (error) {
+    console.error("Error creating user:", error);
     return null;
   }
-
 }
+
 
 export async function updateUserRole(_: any, args: {
   userId: string,

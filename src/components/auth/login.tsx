@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { LOGIN_USER } from "../../lib/gql/queries";
 import gqlClient from "../../services/gql";
-import Signup from "./signup";
+// import Signup from "./signup";
 import Link from "next/link";
 
 export default function Login() {
